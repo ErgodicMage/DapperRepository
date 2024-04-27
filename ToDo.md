@@ -1,5 +1,4 @@
 ### ToDo ###
-* Test and Debug ClassMapper
 * SQL Builder Classes
 	* WhereBuilder
 	* SqlSelectBuilder
@@ -10,3 +9,4 @@
 
 
 ### Done ###
+* ~~Test and Debug ClassMapper~~

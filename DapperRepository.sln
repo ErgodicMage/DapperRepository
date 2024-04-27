@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{89AAF7E3-6A20-4452-A718-68560ADED2A4}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		LICENSE = LICENSE
+		README.md = README.md
+		ToDo.md = ToDo.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BA5C7A3B-1C56-470A-AC40-F812DFE51224}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DapperRepository", "src\DapperRepository\DapperRepository.csproj", "{E106A381-96BA-490B-BF26-00281DC616E7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D1167D9F-8959-431C-91C3-EBABF672D754}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DapperRepositoryTests", "tests\DapperRepositoryTests\DapperRepositoryTests.csproj", "{CCBBDE67-C771-4272-877A-C1B53B8271D5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E106A381-96BA-490B-BF26-00281DC616E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E106A381-96BA-490B-BF26-00281DC616E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E106A381-96BA-490B-BF26-00281DC616E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E106A381-96BA-490B-BF26-00281DC616E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCBBDE67-C771-4272-877A-C1B53B8271D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCBBDE67-C771-4272-877A-C1B53B8271D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCBBDE67-C771-4272-877A-C1B53B8271D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCBBDE67-C771-4272-877A-C1B53B8271D5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E106A381-96BA-490B-BF26-00281DC616E7} = {BA5C7A3B-1C56-470A-AC40-F812DFE51224}
+		{CCBBDE67-C771-4272-877A-C1B53B8271D5} = {D1167D9F-8959-431C-91C3-EBABF672D754}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CDC520F2-0E77-4ECA-A171-5A2DAE8902FB}
+	EndGlobalSection
+EndGlobal

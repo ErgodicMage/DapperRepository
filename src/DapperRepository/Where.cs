@@ -23,10 +23,13 @@ public sealed class Where
     public WhereAndOrNot AndOrNot { get; set; } = WhereAndOrNot.None;
     public string? ColumnName { get; set; }
     public WhereOperator Operator { get; set; }
-    //public string? Value { get; set; }
+    public string? ValueName { get; set; }
 
     private void Initiaize(ColumnMapper column)
-        => ColumnName = string.IsNullOrEmpty(column.ColumnName) ? column.ClassName : column.ColumnName;
+    {
+        ColumnName = string.IsNullOrEmpty(column.ColumnName) ? column.ClassName : column.ColumnName;
+        ValueName = $"@{column.ColumnName}";
+    }
 }
 
 public enum WhereAndOrNot
@@ -50,4 +53,37 @@ public enum WhereOperator
     Between,
     Like,
     In
+}
+
+internal static class WhereHandlers
+{
+    public static string? GetAndOrNot(Where where)
+    {
+        return where.AndOrNot switch
+        {
+            WhereAndOrNot.And => " AND ",
+            WhereAndOrNot.Or => " OR ",
+            WhereAndOrNot.Not => " NOT ",
+            _ => " "
+        };
+    }
+
+    public static string? GetWhereOperator(Where where)
+    {
+        return where.Operator switch
+        {
+            WhereOperator.Null => " IS NULL ",
+            WhereOperator.NotNull => " IS NOT NULL ",
+            WhereOperator.Equals => "=",
+            WhereOperator.NotEquals => "<>",
+            WhereOperator.GreaterThan => ">",
+            WhereOperator.GreaterThanOrEqual => "<=",
+            WhereOperator.LessThan => "<",
+            WhereOperator.LessThanOrEqual => "<=",
+            WhereOperator.Between => " BETWEEN ",
+            WhereOperator.In => " IN ",
+            WhereOperator.Like => " LIKE ",
+            _ => " "
+        };
+    }
 }

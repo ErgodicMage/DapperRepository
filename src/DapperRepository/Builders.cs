@@ -128,7 +128,7 @@ internal static class Builders
         }
     }
 
-    private static void BuildInsertValues(StringBuilder sb, TableMapper table, IList<ColumnMapper> columns)
+    public static void BuildInsertValues(StringBuilder sb, TableMapper table, IList<ColumnMapper> columns)
     {
         if (table is null || columns is null) return;
 
@@ -141,19 +141,20 @@ internal static class Builders
         }
     }
 
-    private static void HandleAlias(StringBuilder sb, TableMapper table)
+    public static void HandleAlias(StringBuilder sb, TableMapper table)
     {
         if (string.IsNullOrEmpty(table.Alias)) return;
         sb.Append(table.Alias);
         sb.Append('.');
     }
-    private static void HandleAtToColumnName(StringBuilder sb, ColumnMapper column)
+
+    public static void HandleAtToColumnName(StringBuilder sb, ColumnMapper column)
     {
         sb.Append('@');
         sb.Append(column.ClassName);
     }
 
-    private static bool CanInsertColumn(ColumnMapper column)
+    public static bool CanInsertColumn(ColumnMapper column)
     {
         if ((column.Attributes & ColumnAttributes.Required) == ColumnAttributes.Required) return true;
 

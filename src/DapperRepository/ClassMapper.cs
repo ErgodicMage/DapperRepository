@@ -73,7 +73,7 @@ public class ClassMapper
     }
 
     protected string? _insertStatement;
-    protected virtual string? GetInsertStatement()
+    public virtual string? GetInsertStatement()
     {
         if (!string.IsNullOrEmpty(_insertStatement)) return _insertStatement;
         if (Table is null || Columns is null || Columns.Count == 0) return null;

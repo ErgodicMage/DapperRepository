@@ -6,7 +6,7 @@
 	* SqlInsertBuilder
 	* SqlUpdateBuilder
 	* SqlDeleteBuilder
-
+* SqlDialect
 
 
 ### Done ###

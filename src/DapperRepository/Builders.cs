@@ -12,7 +12,7 @@ internal static class Builders
         else
         {
             StringBuilder sb = new();
-            if (string.IsNullOrEmpty(table.Schema))
+            if (!string.IsNullOrEmpty(table.Schema))
             {
                 sb.Append(table.Schema);
                 sb.Append('.');
@@ -33,8 +33,8 @@ internal static class Builders
 
         StringBuilder sb = new();
 
-        var selectColumns = columns.Where(c => (c.Attributes & ColumnAttributes.NotMapped) != 0 || 
-                                                (c.Attributes & ColumnAttributes.IgnoreSelect) != 0);
+        var selectColumns = columns.Where(c => (c.Attributes & ColumnAttributes.NotMapped) != ColumnAttributes.NotMapped && 
+                                                (c.Attributes & ColumnAttributes.IgnoreSelect) != ColumnAttributes.IgnoreSelect);
         bool first = true;
 
         foreach (ColumnMapper column in selectColumns)
@@ -64,7 +64,7 @@ internal static class Builders
     {
         if (columns is null) return null;
 
-        var idColumns = columns.Where(c => (c.Attributes & ColumnAttributes.Key) != 0);
+        var idColumns = columns.Where(c => (c.Attributes & ColumnAttributes.Key) == ColumnAttributes.Key);
         if (!idColumns.Any()) return null;
 
         StringBuilder sb = new();
@@ -102,9 +102,10 @@ internal static class Builders
 
         sb.Append("INSERT INTO ");
         sb.Append(BuildFullTableName(table));
-        sb.Append(") ");
+        sb.Append(" (");
         BuildInsertColumns(sb, table, columns);
-        sb.Append(" VALUES (");
+        sb.Append(") VALUES (");
+        BuildInsertValues(sb, table, columns);
         sb.Append(')');
 
         return sb.ToString();
@@ -114,10 +115,8 @@ internal static class Builders
     {
         if (table is null || columns is null) return;
 
-        var insertColumns = columns.Where(c => CanInsertColumn(c));
-
         bool first = true;
-        foreach (var column in columns)
+        foreach (var column in columns.Where(c => CanInsertColumn(c)))
         {
             if (!first) sb.Append(", ");
             HandleAlias(sb, table);
@@ -133,14 +132,11 @@ internal static class Builders
     {
         if (table is null || columns is null) return;
 
-        var insertColumns = columns.Where(c => CanInsertColumn(c));
-
         bool first = true;
-        foreach (var column in columns)
+        foreach (var column in columns.Where(c => CanInsertColumn(c)))
         {
             if (!first) sb.Append(", ");
             HandleAtToColumnName(sb, column);
-            sb.Append(column.ClassName);
             first = false;
         }
     }
@@ -154,17 +150,17 @@ internal static class Builders
     private static void HandleAtToColumnName(StringBuilder sb, ColumnMapper column)
     {
         sb.Append('@');
-        sb.Append(column.ColumnName);
+        sb.Append(column.ClassName);
     }
 
     private static bool CanInsertColumn(ColumnMapper column)
     {
-        if ((column.Attributes & ColumnAttributes.Required) != 0) return true;
+        if ((column.Attributes & ColumnAttributes.Required) == ColumnAttributes.Required) return true;
 
-        if ((column.Attributes & ColumnAttributes.Key) != 0) return false;
-        if ((column.Attributes & ColumnAttributes.ReadOnly) != 0) return false;
-        if ((column.Attributes & ColumnAttributes.IgnoreInsert) != 0) return false;
-        if ((column.Attributes & ColumnAttributes.NotMapped) != 0) return false;
+        if ((column.Attributes & ColumnAttributes.Key) == ColumnAttributes.Key) return false;
+        if ((column.Attributes & ColumnAttributes.ReadOnly) == ColumnAttributes.ReadOnly) return false;
+        if ((column.Attributes & ColumnAttributes.IgnoreInsert) == ColumnAttributes.IgnoreInsert) return false;
+        if ((column.Attributes & ColumnAttributes.NotMapped) == ColumnAttributes.NotMapped) return false;
 
         return true;
     }

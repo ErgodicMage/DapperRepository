@@ -21,6 +21,7 @@ public class ClassMapper<T> : ClassMapper where T : class
     public override string? GetWhereId()
     {
         if (!string.IsNullOrEmpty (_whereId)) return _whereId;
+        SetTable();
         SetColumns();
         return base.GetWhereId();
     }
@@ -28,13 +29,15 @@ public class ClassMapper<T> : ClassMapper where T : class
     public override string? GetSelectColumns()
     {
         if (!string.IsNullOrEmpty(_selectColumns)) return _selectColumns;
+        SetTable();
         SetColumns();
         return base.GetSelectColumns();
     }
 
-    protected override string? GetInsertStatement()
+    public override string? GetInsertStatement()
     {
         if (!string.IsNullOrEmpty(_insertStatement)) return _insertStatement;
+        SetTable();
         SetColumns();
         return base.GetInsertStatement();
     }
@@ -43,6 +46,7 @@ public class ClassMapper<T> : ClassMapper where T : class
     #region Set
     public void SetTable()
     {
+        if (Table is not null) return;
         Type type = typeof(T);
 
         var tableattr = CustomAttributesHelper.TableAttribute(type);
@@ -54,6 +58,8 @@ public class ClassMapper<T> : ClassMapper where T : class
 
     public void SetColumns()
     {
+        if (Columns is not null && Columns.Count > 0) return;
+
         PropertyInfo[] properties = typeof(T).GetProperties();
         if (properties is null || properties.Length == 0) return;
 

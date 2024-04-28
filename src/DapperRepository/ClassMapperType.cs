@@ -4,10 +4,16 @@ public class ClassMapper<T> : ClassMapper where T : class
 {
     #region Constructor
     public ClassMapper() : base()
-    { }
+    {
+        SetTable();
+        SetColumns();
+    }
 
     public ClassMapper(DapperRepositorySettings settings) : base(settings)
-    { }
+    {
+        SetTable();
+        SetColumns();
+    }
     #endregion
 
     #region Get

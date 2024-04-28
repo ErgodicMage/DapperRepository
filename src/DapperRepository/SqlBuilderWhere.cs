@@ -39,9 +39,14 @@ public abstract class SqlBuilderWhere : SqlBuilder
 
     protected void BuildWhereStatement(StringBuilder sb)
     {
-        if (WhereConditions is null || WhereConditions.Count == 0) return;
-
         sb.Append("WHERE ");
+        if (!string.IsNullOrEmpty(_whereId))
+        {
+            sb.Append(_whereId);
+            return;
+        }
+
+        if (WhereConditions is null || WhereConditions.Count == 0) return;
 
         if (!string.IsNullOrEmpty(_whereId))
         {
@@ -52,7 +57,11 @@ public abstract class SqlBuilderWhere : SqlBuilder
         bool first = true;
         foreach (var condition in WhereConditions)
         {
-            if (!first) sb.Append(WhereHandlers.GetAndOrNot(condition));
+            if (!first)
+            {
+                if (condition.AndOrNot == WhereAndOrNot.None) condition.AndOrNot = WhereAndOrNot.And;
+                sb.Append(WhereHandlers.GetAndOrNot(condition));
+            }
 
             sb.Append(condition.ColumnName);
             sb.Append(WhereHandlers.GetWhereOperator(condition));

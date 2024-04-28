@@ -64,7 +64,7 @@ internal static class WhereHandlers
             WhereAndOrNot.And => " AND ",
             WhereAndOrNot.Or => " OR ",
             WhereAndOrNot.Not => " NOT ",
-            _ => " "
+            _ => ""
         };
     }
 
@@ -83,7 +83,7 @@ internal static class WhereHandlers
             WhereOperator.Between => " BETWEEN ",
             WhereOperator.In => " IN ",
             WhereOperator.Like => " LIKE ",
-            _ => " "
+            _ => ""
         };
     }
 }

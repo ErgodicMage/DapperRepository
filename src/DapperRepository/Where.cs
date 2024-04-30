@@ -19,6 +19,19 @@ public sealed class Where
         Operator = op;
     }
 
+    public Where(string columnName, WhereOperator op = WhereOperator.Equals)
+    {
+        ColumnName = columnName;
+        Operator = op;
+    }
+
+    public Where(WhereAndOrNot andornot, string columnName, WhereOperator op = WhereOperator.Equals)
+    {
+        AndOrNot = andornot;
+        ColumnName = columnName;
+        Operator = op;
+    }
+
 
     public WhereAndOrNot AndOrNot { get; set; } = WhereAndOrNot.None;
     public string? ColumnName { get; set; }
@@ -77,7 +90,7 @@ internal static class WhereHandlers
             WhereOperator.Equals => "=",
             WhereOperator.NotEquals => "<>",
             WhereOperator.GreaterThan => ">",
-            WhereOperator.GreaterThanOrEqual => "<=",
+            WhereOperator.GreaterThanOrEqual => ">=",
             WhereOperator.LessThan => "<",
             WhereOperator.LessThanOrEqual => "<=",
             WhereOperator.Between => " BETWEEN ",

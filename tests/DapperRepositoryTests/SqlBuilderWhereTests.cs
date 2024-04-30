@@ -24,9 +24,9 @@ public class SqlBuilderWhereTests
         mapper.SetTable();
         mapper.SetColumns();
 
-        var firstNameColumn = mapper.Columns.Where(c => c.ClassName == "FirstName").FirstOrDefault();
+        var firstNameColumn = mapper.Columns?.Where(c => c.ClassName == "FirstName").FirstOrDefault();
         Assert.NotNull(firstNameColumn);
-        var lastNameColumn = mapper.Columns.Where(c => c.ClassName == "LastName").FirstOrDefault();
+        var lastNameColumn = mapper.Columns?.Where(c => c.ClassName == "LastName").FirstOrDefault();
         Assert.NotNull(lastNameColumn);
 
         string? sql = SqlCountBuilder.CreateCountBuilder(settings, mapper).

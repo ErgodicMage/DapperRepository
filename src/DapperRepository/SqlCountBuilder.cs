@@ -9,7 +9,7 @@ public sealed class SqlCountBuilder : SqlBuilderWhere
     #endregion
 
     public static SqlCountBuilder CreateCountBuilder(DapperRepositorySettings settings, ClassMapper mapper)
-        => new SqlCountBuilder(settings, mapper);
+        => new(settings, mapper);
 
     #region Build
     public override string? Build()

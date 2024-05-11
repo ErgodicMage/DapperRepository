@@ -40,8 +40,8 @@ public sealed class Where
 
     private void Initiaize(ColumnMapper column)
     {
-        ColumnName = string.IsNullOrEmpty(column.ColumnName) ? column.ClassName : column.ColumnName;
-        ValueName = $"@{column.ColumnName}";
+        ColumnName = column.ColumnName;
+        ValueName = $"@{(string.IsNullOrEmpty(column.ClassName) ? column.ColumnName : column.ClassName)}";
     }
 }
 

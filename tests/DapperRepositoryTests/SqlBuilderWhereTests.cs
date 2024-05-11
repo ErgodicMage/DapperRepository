@@ -10,10 +10,12 @@ public class SqlBuilderWhereTests
 
         SqlCountBuilder builder = new(settings, mapper);
         string? sql = builder.WhereId().Build();
-        Assert.False(string.IsNullOrEmpty(sql));
+
+        string expected = "SELECT COUNT(1) FROM People AS Person WHERE Person.Id=@Id";
+        Assert.Equal(expected, sql);
 
         Assert.False(string.IsNullOrEmpty(builder.SqlStatement));
-        Assert.Equal(sql, builder.SqlStatement);
+        Assert.Equal(expected, builder.SqlStatement);
     }
 
     [Fact]
@@ -33,6 +35,9 @@ public class SqlBuilderWhereTests
             WhereEqual(firstNameColumn).
             WhereEqual(lastNameColumn).
             Build();
-        Assert.False(string.IsNullOrEmpty(sql));
+
+        string expected = "SELECT COUNT(1) FROM People AS Person WHERE First_Name=@FirstName AND Last_Name=@LastName";
+        
+        Assert.Equal(expected, sql);
     }
 }

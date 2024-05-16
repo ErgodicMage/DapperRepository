@@ -11,6 +11,7 @@
 ### In Progress ###
 * SQL Builder Classes
 * Low level Dapper functions
+* Build DapperRepositoryTests local database
 
 
 ### Done ###

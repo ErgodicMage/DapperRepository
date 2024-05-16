@@ -61,5 +61,17 @@ public abstract class SqlBuilderWhere : SqlBuilder
             first = false;
         }
     }
+
+    public DynamicParameters? BuildDynamicParameters(object? values)
+    {
+        if (WhereConditions is null) return null;
+
+        DynamicParameters? dynamicParameters = new();
+        foreach (var condition in WhereConditions)
+        {
+        }
+
+        return dynamicParameters;
+    }
     #endregion
 }

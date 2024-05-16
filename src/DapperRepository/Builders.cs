@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Data.Common;
+using System.Reflection;
 
 namespace ErgodicMage.DapperRepository;
 
@@ -109,6 +110,31 @@ internal static class Builders
         sb.Append(')');
 
         return sb.ToString();
+    }
+
+    public static IList<Where>? BuildWhere(object? whereConditions, IList<ColumnMapper> columns)
+    {
+        if (whereConditions is null) return null;
+
+        PropertyInfo[] properties = whereConditions.GetType().GetProperties();
+        if (properties is null || properties.Length == 0) return null;
+
+        List<Where> allWheres = new();
+
+        bool first = true;
+        foreach (PropertyInfo property in properties)
+        {
+            var foundColumn = columns.Where(c => c.ClassName == property.Name).FirstOrDefault() ?? 
+                              columns.Where(c => c.ColumnName == property.Name).FirstOrDefault();
+            if (foundColumn is null) continue;
+
+            Where where = first ? new(foundColumn, WhereOperator.Equals) : new(WhereAndOrNot.And, foundColumn, WhereOperator.Equals);
+            allWheres.Add(where);
+
+            first = false;
+        }
+
+        return allWheres;
     }
 
     private static void BuildInsertColumns(StringBuilder sb, TableMapper table, IList<ColumnMapper> columns)

@@ -1,20 +1,21 @@
 ### ToDo ###
 * SQL Builder Classes
-	* SqlCountBuilder
 	* SqlSelectBuilder
 	* SqlInsertBuilder
 	* SqlUpdateBuilder
 	* SqlDeleteBuilder
-* Low level query functions
+* Handling of Open/Close parentheses
+* Lots more tests for SqlBuilderWhere
 * SqlDialect
 
 ### In Progress ###
 * SQL Builder Classes
-	* SqlBuilderWhere
-	* SqlCountBuilder
+* Low level Dapper functions
+
 
 ### Done ###
 * ~~Test and Debug ClassMapper~~
 * SQL Builder Classes
 	* ~~SqlBuilder Base Class~~
-	*  ~~Where~~
+	* ~~SqlBuilderWhere~~
+	* ~~SqlCountBuilder~~

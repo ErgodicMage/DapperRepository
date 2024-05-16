@@ -10,7 +10,7 @@ public abstract class SqlBuilderWhere : SqlBuilder
     #endregion
 
     #region Properties
-    public IList<Where>? WhereConditions { get; set; }
+    public List<Where>? WhereConditions { get; set; }
     #endregion
 
     #region Add Where
@@ -18,6 +18,13 @@ public abstract class SqlBuilderWhere : SqlBuilder
     {
         WhereConditions ??= new List<Where>();
         WhereConditions.Add(where);
+    }
+
+    public void AddWhere(ICollection<Where> conditions)
+    {
+        if (conditions == null) return;
+        WhereConditions ??= new List<Where>();
+        WhereConditions.AddRange(conditions);
     }
 
     public void AddWhereId() => _whereId ??= _mapper.GetWhereId();

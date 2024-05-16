@@ -13,7 +13,7 @@ public class ClassMapper
     #region Properties
     public TableMapper? Table { get; protected set; }
 
-    public IList<ColumnMapper>? Columns { get; protected set; }
+    public List<ColumnMapper>? Columns { get; protected set; }
     #endregion
 
     #region Add Mappings

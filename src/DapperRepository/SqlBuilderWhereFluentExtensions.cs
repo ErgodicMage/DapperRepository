@@ -16,6 +16,13 @@ public static class SqlBuilderWhereFluentExtensions
         return builder;
     }
 
+    public static SqlBuilderWhere Where(this SqlBuilderWhere builder, object? whereConditions)
+    {
+        builder.AddWhere(Builders.BuildWhere(whereConditions, builder.Columns!)!);
+        return builder;
+    }
+
+
     public static SqlBuilderWhere WhereEqual(this SqlBuilderWhere builder, ColumnMapper column) 
         => builder.Where(new Where(column, WhereOperator.Equals));
     public static SqlBuilderWhere AndWhereEqual(this SqlBuilderWhere builder, ColumnMapper column) 

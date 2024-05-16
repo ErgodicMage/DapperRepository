@@ -17,7 +17,7 @@ public abstract class SqlBuilder
     #region Properties
     public TableMapper? Table { get => _mapper.Table; }
     public string? TableName { get => Builders.BuildFullTableName(Table!); }
-    public IList<ColumnMapper>? Columns { get => _mapper.Columns; }
+    public List<ColumnMapper>? Columns { get => _mapper.Columns; }
     public string? SqlStatement { get => _sqlStatement; }
     #endregion
 

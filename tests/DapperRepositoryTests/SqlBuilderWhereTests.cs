@@ -19,7 +19,7 @@ public class SqlBuilderWhereTests
     }
 
     [Fact]
-    public void PersCountErgodicMage()
+    public void PersonCountWhereFirstandLastName()
     {
         DapperRepositorySettings settings = new();
         ClassMapper<Person> mapper = new(settings);
@@ -38,6 +38,21 @@ public class SqlBuilderWhereTests
 
         string expected = "SELECT COUNT(1) FROM People AS Person WHERE First_Name=@FirstName AND Last_Name=@LastName";
         
+        Assert.Equal(expected, sql);
+    }
+
+    [Fact]
+    public void PersonCountWhereConditions()
+    {
+        DapperRepositorySettings settings = new();
+        ClassMapper<Person> mapper = new(settings);
+
+        string? sql = SqlCountBuilder.CreateCountBuilder(settings, mapper).
+            Where(new { FirstName = "Ergodic", LastName = "Mage" }).
+            Build();
+
+        string expected = "SELECT COUNT(1) FROM People AS Person WHERE First_Name=@FirstName AND Last_Name=@LastName";
+
         Assert.Equal(expected, sql);
     }
 }

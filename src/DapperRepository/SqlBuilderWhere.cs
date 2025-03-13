@@ -6,6 +6,7 @@ public abstract class SqlBuilderWhere : SqlBuilder
 {
     #region Constructor
     protected string? _whereId;
+    
     public SqlBuilderWhere(DapperRepositorySettings settings, ClassMapper mapper) : base(settings, mapper) { }
     #endregion
 
@@ -62,13 +63,20 @@ public abstract class SqlBuilderWhere : SqlBuilder
         }
     }
 
-    public DynamicParameters? BuildDynamicParameters(object? values)
+    public virtual DynamicParameters? BuildDynamicParameters(object? values)
     {
-        if (WhereConditions is null) return null;
+        if (values is null || WhereConditions is null) return null;
 
-        DynamicParameters? dynamicParameters = new();
-        foreach (var condition in WhereConditions)
+        if (values is DynamicParameters)
+            return new DynamicParameters(values);
+
+        DynamicParameters ? dynamicParameters = new();
+        foreach (var property in values.GetType().GetProperties())
         {
+            string name = $"@{property.Name}";
+            var where = WhereConditions.FirstOrDefault(w => w.ValueName == name);
+            if (where is not null)
+                dynamicParameters.Add(name, property.GetValue(values, null), direction: ParameterDirection.Input);
         }
 
         return dynamicParameters;
